@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import beta, norm, invgamma
 
+np.random.seed(111)
+
 # Binomial Distribution -> Conj. Prior: Beta Distribution
 def generate_binomial_data(n, p, size):
     return np.random.binomial(n, p, size)
@@ -13,7 +15,7 @@ def binomial_conjugate(data, n, alpha, beta):
     k = np.sum(data)
     return (alpha + k) / (alpha + beta + len(data) * n)
 
-# Gaussian Distribution with Known Variance -> Conj. Prior: Gauss + 
+# Gaussian Distribution with Known Variance -> Conj. Prior: Gaussian
 def generate_gaussian_data(mu, sigma, size):
     return np.random.normal(mu, sigma, size)
 
@@ -27,7 +29,7 @@ def gaussian_known_variance_conjugate(data, mu_0, tau_squared, sigma_squared):
     sigma_n_squared = 1 / (1 / tau_squared + n / sigma_squared)
     return mu_n, sigma_n_squared
 
-# Gaussian Distribution with Known Mean
+# Gaussian Distribution with Known Mean -> Conj. Prior: Wishart
 def gaussian_known_mean_mle(data, mu):
     n = len(data)
     return np.sum((data - mu)**2) / n
@@ -50,7 +52,7 @@ def plot_posterior_density(prior, posterior, label, x_range, n_points=100):
     plt.plot(x, prior.pdf(x), label=f'Prior {label}')
     plt.plot(x, posterior.pdf(x), label=f'Posterior {label}')
 
-# Example Usage
+# Binomial 
 n = 10
 p = 0.5
 size = 100
