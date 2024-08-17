@@ -5,3 +5,6 @@ pandas
 PyQt6
 scikit-learn
 moviepy
+PyMC
+Cython
+pystan
